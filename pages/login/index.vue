@@ -5,16 +5,17 @@ const credentials = reactive({
     password: '',
 })
 async function login() {
-    $fetch('/api/login', {
-        method: 'POST',
-        body: credentials
-    })
-        .then(async () => {
-            // Refresh the session on client-side and redirect to the home page
-            await refreshSession()
-            await navigateTo('/')
+    try {
+        await $fetch('/api/login', {
+            method: 'POST',
+            body: credentials
         })
-        .catch(() => alert('Bad credentials'))
+        // Refresh the session on client-side and redirect to the home page
+        await refreshSession()
+        await navigateTo('/')
+    } catch (error) {
+        alert('Bad credentials')
+    }
 }
 </script>
 
@@ -22,6 +23,6 @@ async function login() {
     <form @submit.prevent="login">
         <input v-model="credentials.email" type="email" placeholder="Email" />
         <input v-model="credentials.password" type="password" placeholder="Password" />
-        <button type="submit">Login</button>
+        <UButton color="secondary" @click="login">Login</UButton>
     </form>
 </template>

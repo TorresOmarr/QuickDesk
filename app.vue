@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <ColorMode />
+  <UApp>
     <NuxtPage />
-  </div>
+  </UApp>
+
 </template>
